@@ -1,10 +1,13 @@
 package com.javapuzzler.test;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 public class DataTypePuzzle {
 
@@ -14,14 +17,16 @@ public class DataTypePuzzle {
         // i % 2 == 1 로 홀수를 판별하는 것은 양수의 경우엔 잘 작동하지만,
         // 음수의 경우에는 홀,짝 상관없이 항상 false를 리턴한다.
         // 자바는 i % 2 를 계산 할때 i의 부호를 따르기 때문임.
-        assertThat(isOddW(5)).isTrue();
-        assertThat(isOddW(-1)).isTrue(); // fail
-        assertThat(isOddW(-2)).isTrue();
+        assertTrue(isOddW(5));
+        assertFalse(isOddW(-2)); // fail
+        assertFalse(isOddW(-1)); // fail
+        assertFalse(isOddW(-3)); // fail
+
 
         // i % 2 != 0 으로 홀수를 판별하면 음수들도 걸러낼 수 있다.
-        assertThat(isOddR(5)).isTrue();
-        assertThat(isOddR(-1)).isTrue();
-        assertThat(isOddR(-2)).isTrue();
+        assertTrue(isOddR(5));
+        assertTrue(isOddR(-1));
+        assertTrue(isOddR(-2));
     }
 
     public static boolean isOddW(int num) {
@@ -36,7 +41,7 @@ public class DataTypePuzzle {
     public void bigDecimal() {
         /** 금융 계산을 할 때는 십진 연산을 하는 Big Decimal을 사용 할 것. */
         // float이나 double형은 이진 부동소수점 연산을 하므로 오차가 발생한다.
-        assertThat(2.00 - 1.10).isEqualTo(0.9); // 0.89999999999999
+        assertNotEquals(2.00 - 1.10, 0.9); // 0.89999999999999
 
         // BigDecimal로 연산하면 십진수 연산을 하므로 정확한 숫자가 나온다.
         // BigDecimal을 생성할 때. new BigDecimal("2.0") 처럼 문자열 형태로 생성해야 함.
@@ -44,10 +49,10 @@ public class DataTypePuzzle {
         // 혹은 이렇게 생성해야 함. BigDecimal.valueOf(2.0).
 
         // 따라서 아래 테스트는 틀렸음.
-        assertThat(new BigDecimal(2.00).subtract(new BigDecimal(1.10))).isEqualTo(0.9);
+        assertNotEquals(new BigDecimal(2.00).subtract(new BigDecimal(1.10)).compareTo(new BigDecimal(0.9)), 0);
 
         // BigDecimal.valueOf(2.0) 혹은 new BigDecimal("2.0") 과 같은 형식으로.
-        assertThat(BigDecimal.valueOf(2.0).subtract(BigDecimal.valueOf(1.1))).isEqualTo(0.9); // 성공.
+        assertEquals(BigDecimal.valueOf(2.0).subtract(BigDecimal.valueOf(1.1)), BigDecimal.valueOf(0.9)); // 성공.
     }
 
     @Test
@@ -63,7 +68,7 @@ public class DataTypePuzzle {
 
         System.out.println(MICROS_PER_DAY);
         System.out.println(MILLIS_PER_DAY);
-        assertThat(MICROS_PER_DAY / MILLIS_PER_DAY).isEqualTo(1000); // 틀렸다. 5L 이 반환된다.
+        assertNotEquals(MICROS_PER_DAY / MILLIS_PER_DAY, 1000); // 틀렸다. 5L 이 반환된다.
 
         // 타깃 타이핑을 지원하지 않으니 해결책은?
         // 맨 첫번째 수를 Long 형으로 지정해주면 된다.
@@ -72,8 +77,7 @@ public class DataTypePuzzle {
         System.out.println(MICROS_PER_DAY_LONG);
         System.out.println(MILLIS_PER_DAY_LONG);
 
-        assertThat(MICROS_PER_DAY / MILLIS_PER_DAY).isEqualTo(1000); // 성공. 1000을 반환함.
-
+        assertEquals(MICROS_PER_DAY / MILLIS_PER_DAY, 1000); // 성공. 1000을 반환함.
         // 참고로 python이나 ruby는 연산 결과가 overflow가 발생하면 자동으로 자료형이 변환된다.
     }
 
