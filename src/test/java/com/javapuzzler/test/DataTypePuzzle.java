@@ -26,7 +26,7 @@ public class DataTypePuzzle {
         // i % 2 != 0 으로 홀수를 판별하면 음수들도 걸러낼 수 있다.
         assertTrue(isOddR(5));
         assertTrue(isOddR(-1));
-        assertTrue(isOddR(-2));
+        assertFalse(isOddR(-2));
     }
 
     public static boolean isOddW(int num) {
@@ -77,8 +77,52 @@ public class DataTypePuzzle {
         System.out.println(MICROS_PER_DAY_LONG);
         System.out.println(MILLIS_PER_DAY_LONG);
 
-        assertEquals(MICROS_PER_DAY / MILLIS_PER_DAY, 1000); // 성공. 1000을 반환함.
+        assertEquals(MICROS_PER_DAY_LONG / MILLIS_PER_DAY_LONG, 1000); // 성공. 1000을 반환함.
         // 참고로 python이나 ruby는 연산 결과가 overflow가 발생하면 자동으로 자료형이 변환된다.
+    }
+
+    @Test
+    public void plusLong() {
+        /** Long 형 자료형을 사용할 때는 소문자 l을 쓰지마라. 숫자 1과 혼동된다. 대문자 L 을 사용할 것.
+         * 변수에도 마찬가지. 소문자 l보다는 대문자 L을 사용할 것.
+         */
+        assertNotEquals(12345 + 5432l, 66666);
+        assertEquals(12345 + 5432L, 17777);
+    }
+
+    @Test
+    public void dosEquis() {
+        /** 조건 연산자를 사용할 때는 두번째와 세번째 피연산자의 자료형을 일치시키지 않으면 형변환이 일어나게 된다.
+         * 피연산자중 하나가 byte, short, char 자료형이고 다른 하나가 int 형이라면? byte, short, char 자료형을 int형으로
+         * 형변환 해버린다.
+         * 조건연산자를 사용할 때는 두번째, 세번째 변수의 자료형을 일치시켜야 한다.
+         */
+        char x = 'X';
+        int i = 0;
+        System.out.print(true ? x : 0); // x
+        System.out.println(false ? i : x); // 88
+
+        char y = 'Y';
+        final int j = 0;
+        System.out.print(true ? y : 0);
+        System.out.print(false ? j : y);
+    }
+
+    @Test
+    public void twins() {
+        /** x += i; 와 같은 복합할당 연산자에는 byte, short, char 자료형을 사용하지 않을 것 */
+        short x = 0;
+        int i = 123456;
+
+        assertNotEquals(x += i , 123456); // 123456이 나올거 같지만 -7616이 반환된다.
+        // x += i 와 같이 복합할당연산자는 자동형변환이 일어난다.
+        // int가 short로 강제형변환 overflow가 발생한다.
+
+        // 대신 x = x + i 는 아예 컴파일 에러가 나버린다.
+        // 작은 자료형에 큰 자료형을 할당하지 않도록 한다.
+        // 특히 복합연산자를 사용할 때는 '강제 축소 형변환'이 일어나기 때문에 overflow가 발생해 결과 값이 달라진다.
+        // 컴파일 에러에서도 잡히지 않으니까 꼭 자료형을 맞춰줄 것.
+
     }
 
 
