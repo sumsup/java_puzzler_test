@@ -8,7 +8,9 @@ public class Ch02_CharSequencePuzzle {
 
     @Test
     public void plusChar() {
-        /** char + char 는 int형으로 계산됨.
+        /**
+         * 결론 : char 형의 문자열 합치기는 "" 를 더해준다. StringBuilder를 쓴다.
+         * char + char 는 int형으로 계산됨.
          * char형을 문자로 결합 하려면 StringBuilder나 StringBuffer를 쓰거나
          * 맨 앞에다 빈 문자열을 추가해줘야 함.
          * "" + 'H' + 'a' => "Ha"
