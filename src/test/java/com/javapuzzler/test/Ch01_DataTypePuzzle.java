@@ -9,11 +9,12 @@ import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
 
-public class DataTypePuzzle {
+public class Ch01_DataTypePuzzle {
 
     @Test
     public void isOdd() {
         /** 홀수 판별에는 i % 2 != 0 을 사용할 것 */
+        /** 홀수 판별에는 0 을 사용할 것 */
         // i % 2 == 1 로 홀수를 판별하는 것은 양수의 경우엔 잘 작동하지만,
         // 음수의 경우에는 홀,짝 상관없이 항상 false를 리턴한다.
         // 자바는 i % 2 를 계산 할때 i의 부호를 따르기 때문임.
@@ -122,9 +123,20 @@ public class DataTypePuzzle {
         // 작은 자료형에 큰 자료형을 할당하지 않도록 한다.
         // 특히 복합연산자를 사용할 때는 '강제 축소 형변환'이 일어나기 때문에 overflow가 발생해 결과 값이 달라진다.
         // 컴파일 에러에서도 잡히지 않으니까 꼭 자료형을 맞춰줄 것.
-
     }
 
+    @Test
+    public void reverseTwins() {
+        /** 둘다 작동잘됨. 자바 1.5 이상의 버전에서는 버전업되면서 개선된 것으로 추정. */
+        Object x = "Buy";
+        String i = "Effective Java!";
 
+        x = x + i;
+        System.out.println(x);
+
+        Object y = "Buy";
+        String j = "Effective Java!";
+        System.out.println(y += j);
+    }
 
 }
