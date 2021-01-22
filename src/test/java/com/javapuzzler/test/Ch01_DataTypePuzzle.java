@@ -51,6 +51,7 @@ public class Ch01_DataTypePuzzle {
 
         // 따라서 아래 테스트는 틀렸음.
         assertNotEquals(new BigDecimal(2.00).subtract(new BigDecimal(1.10)).compareTo(new BigDecimal(0.9)), 0);
+        System.out.println(new BigDecimal(2.00).subtract(new BigDecimal(1.10)) +  " is " + new BigDecimal(0.9) + " ?");
 
         // BigDecimal.valueOf(2.0) 혹은 new BigDecimal("2.0") 과 같은 형식으로.
         assertEquals(BigDecimal.valueOf(2.0).subtract(BigDecimal.valueOf(1.1)), BigDecimal.valueOf(0.9)); // 성공.
@@ -70,6 +71,7 @@ public class Ch01_DataTypePuzzle {
         System.out.println(MICROS_PER_DAY);
         System.out.println(MILLIS_PER_DAY);
         assertNotEquals(MICROS_PER_DAY / MILLIS_PER_DAY, 1000); // 틀렸다. 5L 이 반환된다.
+        System.out.println(MICROS_PER_DAY / MILLIS_PER_DAY);
 
         // 타깃 타이핑을 지원하지 않으니 해결책은?
         // 맨 첫번째 수를 Long 형으로 지정해주면 된다.
@@ -93,20 +95,22 @@ public class Ch01_DataTypePuzzle {
 
     @Test
     public void dosEquis() {
-        /** 조건 연산자를 사용할 때는 두번째와 세번째 피연산자의 자료형을 일치시키지 않으면 형변환이 일어나게 된다.
-         * 피연산자중 하나가 byte, short, char 자료형이고 다른 하나가 int 형이라면? byte, short, char 자료형을 int형으로
-         * 형변환 해버린다.
+        /** byte, short, char 자료형을 int형과 섞어 쓰면 int형으로 형변환 시킨다.
          * 조건연산자를 사용할 때는 두번째, 세번째 변수의 자료형을 일치시켜야 한다.
          */
         char x = 'X';
         int i = 0;
-        System.out.print(true ? x : 0); // x
+        System.out.println(true ? x : i); // 88
         System.out.println(false ? i : x); // 88
 
         char y = 'Y';
         final int j = 0;
-        System.out.print(true ? y : 0);
-        System.out.print(false ? j : y);
+        System.out.println(true ? y : 0);
+        System.out.println(false ? j : y);
+
+        char z = 'Z';
+        System.out.println(true ? z : 0);
+        System.out.println(false ? 0 : z);
     }
 
     @Test
@@ -119,7 +123,7 @@ public class Ch01_DataTypePuzzle {
         // x += i 와 같이 복합할당연산자는 자동형변환이 일어난다.
         // int가 short로 강제형변환 overflow가 발생한다.
 
-        // 대신 x = x + i 는 아예 컴파일 에러가 나버린다.
+        // 대신 x = x + i 는 아예 컴파일 에러가 나버린다. incompatible types: possible lossy conversion from int to short.
         // 작은 자료형에 큰 자료형을 할당하지 않도록 한다.
         // 특히 복합연산자를 사용할 때는 '강제 축소 형변환'이 일어나기 때문에 overflow가 발생해 결과 값이 달라진다.
         // 컴파일 에러에서도 잡히지 않으니까 꼭 자료형을 맞춰줄 것.
