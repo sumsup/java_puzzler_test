@@ -214,7 +214,9 @@ public class Ch02_CharSequencePuzzle {
         // StringBuffer의 생성자는 인수로 capacity를 보냄.
         // 'P'를 인수로 쓰면 INT형인 77로 형변환되고 77개의 공간을 가진 StringBuffer가 생성됨.
         // char형은 int형으로 형변환 된다. String 형이 아니라.
-        // 참고 : 인수(argument) 는 함수로 보내는 입장. 인자(parameter)는 받는 입장.
+        // 참고 : 인수(argument)는 함수로 보내는 입장. 인자(parameter)는 받는 입장.
+        // function(a, b) 에서 a,b 는 인수. arguments.
+        // public void function(int c, String d) 에서 c,d는 인자. parameter.
 
         // 그리고 case문에 break도 빠져있음.
 
