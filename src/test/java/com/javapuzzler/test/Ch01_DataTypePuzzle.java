@@ -115,7 +115,7 @@ public class Ch01_DataTypePuzzle {
 
     @Test
     public void twins() {
-        /** x += i; 와 같은 복합할당 연산자에는 byte, short, char 자료형을 사용하지 않을 것 */
+        /** byte, short, char 자료형에는 x += i; 와 같은 복합할당 연산자를 사용하지 않기 */
         short x = 0;
         int i = 123456;
 
